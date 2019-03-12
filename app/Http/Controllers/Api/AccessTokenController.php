@@ -38,6 +38,7 @@ class AccessTokenController extends ApiController
             'user' => [
                 'uuid' => $account->uuid,
                 'rol' => $userRol->rol->name,
+                'unit_id' => $user->unit_id,
             ],
         ]);
     }
@@ -91,6 +92,7 @@ class AccessTokenController extends ApiController
         return $this->respond([
             'access_token' => $request->get('authenticated_account')->refreshAccessToken()->token,
             'rol' => $userRol->rol->name,
+            'unit_id' => $user->unit_id,
         ]);
     }
 }

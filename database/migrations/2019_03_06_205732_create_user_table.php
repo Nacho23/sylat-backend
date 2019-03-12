@@ -19,6 +19,7 @@ class CreateUserTable extends Migration
             $table->integer('account_id')->unsigned()->index();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('email');
             $table->integer('rut')->length(9)->unsigned();
             $table->char('rut_dv',1);
             $table->string('address_street')->nullable();

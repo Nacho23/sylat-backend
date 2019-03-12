@@ -57,9 +57,11 @@ class User extends Eloquent implements UuidColumnInterface
 		'uuid',
 		'account_id',
 		'first_name',
-		'last_name',
+        'last_name',
+        'email',
 		'rut',
-		'rut_dv',
+        'rut_dv',
+        'unit_id',
 		'address_street',
 		'address_number',
 		'address_department',
@@ -72,6 +74,11 @@ class User extends Eloquent implements UuidColumnInterface
 	public function account()
 	{
 		return $this->belongsTo(\App\Models\Account::class);
+    }
+
+    public function unit()
+	{
+		return $this->belongsTo(\App\Models\Unit::class);
 	}
 
 	public function rols()
