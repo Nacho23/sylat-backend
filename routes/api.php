@@ -17,6 +17,10 @@ Route::middleware(['access_token'])->group(function () {
     Route::patch('/unit/{unit_uuid}', 'Api\UnitController@patchResource');
     Route::delete('/unit/{unit_uuid}', 'Api\UnitController@deleteResource');
     Route::get('/unit/{unit_uuid}', 'Api\UnitController@getResource');
+
+    Route::get('/category', 'Api\CategoryController@getCollection');
+    Route::post('/category', 'Api\CategoryController@postCollection');
+    Route::delete('/category/{category_id}', 'Api\CategoryController@deleteResource');
 });
 
 Route::options('/{any}', function(){ return ''; })->where('any', '.*');

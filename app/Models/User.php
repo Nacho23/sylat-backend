@@ -12,6 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\AuthenticatorTrait;
 use App\Models\UuidColumnInterface;
 use App\Models\UuidColumnTrait;
+use App\Models\Unit;
 
 /**
  * Class User
@@ -86,7 +87,7 @@ class User extends Eloquent implements UuidColumnInterface
 		return $this->belongsToMany(\App\Models\Rol::class, 'user_rol')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
-	}
+    }
 
 	/**
      * Filters users for parameters
@@ -138,7 +139,12 @@ class User extends Eloquent implements UuidColumnInterface
 				->select('user.*')
 				->where('user_rol.rol_id', '3');
 			}
-		}
+        }
+
+        if (array_key_exists("unit_id", $filters))
+        {
+            $query = $query->where('user.unit_id', $filters['unit_id']);
+        }
 
         return $query->paginate(config('app.paginate_size'));
 	}

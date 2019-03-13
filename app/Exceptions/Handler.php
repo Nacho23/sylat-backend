@@ -2,8 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Api\ApiException;
+use App\Exceptions\ErrorsDetailsInterface;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +50,38 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ApiException)
+        {
+            $data = [
+                'error' => true,
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage(),
+                'details' => null,
+            ];
+
+            if ($exception instanceof ErrorsDetailsInterface)
+            {
+                $data['details'] = $exception->getErrors();
+            }
+
+            return new JsonResponse($data, $exception->getHttpStatusCode());
+        }
+
+        if ($exception instanceof ModelNotFoundException)
+        {
+            if (strpos($request->path(), 'api/') >= 0)
+            {
+                $modelName = str_replace("App\\Models\\", "", $exception->getModel());
+
+                return new JsonResponse([
+                    'error' => true,
+                    'code' => ApiException::RESOURCE_NOT_FOUND,
+                    'message' => 'Related ' . $modelName . ' it\'s not a valid resource',
+                    'details' => null,
+                ], 404);
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }

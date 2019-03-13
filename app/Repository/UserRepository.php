@@ -60,8 +60,8 @@ class UserRepository
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
-            'phone_landline' => $data['phone_landline'],
-            'phone_mobile' => $data['phone_mobile'],
+            'phone_landline' => array_key_exists('phone_landline', $data) ? $data['phone_landline'] : null,
+            'phone_mobile' => array_key_exists('phone_mobile', $data) ? $data['phone_mobile'] : null,
             'updated_at' => gmdate('Y-m-d H:i:s'),
         ];
 

@@ -39,6 +39,11 @@ class Unit extends Eloquent implements UuidColumnInterface
 		'code'
 	];
 
+	public function categories()
+	{
+		return $this->hasMany(\App\Models\Category::class);
+	}
+
 	public function users()
 	{
 		return $this->hasMany(\App\Models\User::class);
