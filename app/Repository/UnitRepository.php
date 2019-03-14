@@ -5,10 +5,7 @@ namespace App\Repository;
 use App\Exceptions\Api\ResourceAlreadyExistsException;
 use App\Exceptions\Api\InvalidParametersException;
 use App\Models\Unit;
-/**
- * Class to handle Users
- * @author Gustavo Delgado <gustavo@onecore.cl>
- */
+
 class UnitRepository
 {
     /**
