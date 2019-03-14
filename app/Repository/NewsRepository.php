@@ -67,9 +67,8 @@ class NewsRepository
      */
     public static function delete(string $newsUuid)
     {
-        $news = News::where('uuid', $newsUuid)->where('deleted_at', null)->firstOrFail();
-        $news->deleted_at = gmdate('Y-m-d H:i:s');
-        $news->save();
+        $news = News::where('uuid', $newsUuid)->firstOrFail();
+        $news->delete();
     }
 
     /**
@@ -80,6 +79,6 @@ class NewsRepository
      */
     public static function get(string $newsUuid): News
     {
-        return News::where('uuid', $newsUuid)->where('deleted_at', null)->firstOrFail();
+        return News::where('uuid', $newsUuid)->firstOrFail();
     }
 }

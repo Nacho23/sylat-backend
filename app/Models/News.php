@@ -22,7 +22,6 @@ use App\Models\UuidColumnTrait;
  * @property int $date_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
  * 
  * @property \App\Models\Date $date
  * @property \App\Models\Unit $unit
@@ -31,7 +30,6 @@ use App\Models\UuidColumnTrait;
  */
 class News extends Eloquent implements UuidColumnInterface
 {
-	use \Illuminate\Database\Eloquent\SoftDeletes;
 	use UuidColumnTrait;
 
 	protected $casts = [

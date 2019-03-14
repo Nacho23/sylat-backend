@@ -32,7 +32,6 @@ class NewsTransformer extends AbstractTransformer
             'date_id' => $item->date_id,
             'created_at' => $item->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $item->updated_at !== null ? $item->updated_at->format('Y-m-d H:i:s') : null,
-            'deleted_at' => $item->deleted_at !== null ? $item->deleted_at->format('Y-m-d H:i:s') : null,
         ];
     }
 }
