@@ -7,8 +7,18 @@ use App\Models\Date;
 /**
  * User tranaformer
  */
-class NewsTransformer extends AbstractTransformer
+class QuestionTransformer extends AbstractTransformer
 {
+    /**
+     * @var \App\Http\Transformers\DateTransformer  Date transformer
+     */
+    protected $dateTransformer;
+
+    public function __construct(DateTransformer $dateTransformer)
+    {
+        $this->dateTransformer = $dateTransformer;
+    }
+
     /**
      * {@inheritDoc
      */
@@ -16,11 +26,10 @@ class NewsTransformer extends AbstractTransformer
     {
         return [
             'id' => $item->id,
-            'uuid' => $item->uuid,
             'description' => $item->description,
             'unit_id' => $item->unit_id,
-            'is_active' => $item->is_active,
-            'date    ' => Date::where('id', $item->id),
+            'type' => $item->type,
+            'dates' => Date::where('question_id', $item->id)->get(),
             'created_at' => $item->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $item->updated_at !== null ? $item->updated_at->format('Y-m-d H:i:s') : null,
         ];

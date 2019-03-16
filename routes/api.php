@@ -27,6 +27,12 @@ Route::middleware(['access_token'])->group(function () {
     Route::patch('/news/{new_uuid}', 'Api\NewsController@patchResource');
     Route::delete('/news/{new_uuid}', 'Api\NewsController@deleteResource');
     Route::get('/news/{new_uuid}', 'Api\NewsController@getResource');
+
+    Route::get('/unit/{unit_id}/question', 'Api\Unit\QuestionController@getCollection');
+    Route::post('/unit/{unit_id}/question', 'Api\Unit\QuestionController@postCollection');
+    Route::patch('/question/{question_id}', 'Api\Unit\QuestionController@patchResource');
+    Route::delete('/question/{question_id}', 'Api\Unit\QuestionController@deleteResource');
+    Route::get('/question/{question_id}', 'Api\Unit\QuestionController@getResource');
 });
 
 Route::options('/{any}', function(){ return ''; })->where('any', '.*');

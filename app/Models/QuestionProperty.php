@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Sat, 16 Mar 2019 18:28:59 +0000.
+ * Date: Sat, 16 Mar 2019 18:12:08 +0000.
  */
 
 namespace App\Models;
@@ -10,42 +10,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Date
+ * Class QuestionProperty
  * 
  * @property int $id
- * @property \Carbon\Carbon $date
  * @property int $question_id
+ * @property string $property
+ * @property string $value
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  * 
  * @property \App\Models\Question $question
- * @property \Illuminate\Database\Eloquent\Collection $news
  *
  * @package App\Models
  */
-class Date extends Eloquent
+class QuestionProperty extends Eloquent
 {
-	protected $table = 'date';
-	public $timestamps = false;
-
 	protected $casts = [
 		'question_id' => 'int'
 	];
 
-	protected $dates = [
-		'date'
-	];
-
 	protected $fillable = [
-		'date',
-		'question_id'
+		'question_id',
+		'property',
+		'value'
 	];
 
 	public function question()
 	{
 		return $this->belongsTo(\App\Models\Question::class);
-	}
-
-	public function news()
-	{
-		return $this->hasMany(\App\Models\News::class);
 	}
 }
