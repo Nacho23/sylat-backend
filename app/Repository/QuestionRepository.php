@@ -28,9 +28,9 @@ class QuestionRepository
 
         $question = Question::create($newData);
 
-        for ($i = 0; $i < count($data['date']); $i++)
+        for ($i = 0; $i < count($data['dates']); $i++)
         {
-            Date::create(['date' => $data['date'][$i], 'question_id' => $question->id]);
+            Date::create(['date' => $data['dates'][$i], 'question_id' => $question->id]);
         }
 
         return $question;
@@ -55,14 +55,15 @@ class QuestionRepository
             $dateToDelete->delete();
         }
 
-        for ($i = 0; $i < count($data['date']); $i++)
+        for ($i = 0; $i < count($data['dates']); $i++)
         {
-            Date::create(['date' => $data['date'][$i], 'question_id' => $question->id]);
+            Date::create(['date' => $data['dates'][$i], 'question_id' => $question->id]);
         }
 
         $newData = [
             'description' => $data['description'],
             'type' => $data['type'],
+            'is_active' => $data['is_active'],
             'updated_at' => gmdate('Y-m-d H:i:s'),
         ];
 

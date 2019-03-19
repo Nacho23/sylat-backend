@@ -28,6 +28,7 @@ class QuestionTransformer extends AbstractTransformer
             'id' => $item->id,
             'description' => $item->description,
             'unit_id' => $item->unit_id,
+            'is_active' => $item->is_active,
             'type' => $item->type,
             'dates' => Date::where('question_id', $item->id)->get(),
             'created_at' => $item->created_at->format('Y-m-d H:i:s'),
