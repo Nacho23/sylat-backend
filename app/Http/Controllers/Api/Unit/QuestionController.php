@@ -113,7 +113,7 @@ class QuestionController extends ApiController
     /**
      * Get a question
      * @param  Request   $request  Request
-    * @param  integer   $questionId   Question id
+    * @param  string   $questionId   Question id
      * @return Response
      */
     public function getResource(Request $request, $questionId): Response

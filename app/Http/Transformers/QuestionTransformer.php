@@ -2,6 +2,7 @@
 namespace App\Http\Transformers;
 
 use App\Http\Transformers\DateTransformer;
+use App\Models\QuestionProperty;
 use App\Models\Date;
 
 /**
@@ -31,6 +32,7 @@ class QuestionTransformer extends AbstractTransformer
             'is_active' => $item->is_active,
             'type' => $item->type,
             'dates' => Date::where('question_id', $item->id)->get(),
+            'options' => QuestionProperty::where('question_id', $item->id)->get(),
             'created_at' => $item->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $item->updated_at !== null ? $item->updated_at->format('Y-m-d H:i:s') : null,
         ];

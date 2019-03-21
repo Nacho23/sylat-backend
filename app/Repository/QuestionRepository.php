@@ -7,6 +7,7 @@ use App\Exceptions\Api\InvalidParametersException;
 use App\Exceptions\Api\ResourceAlreadyHasContextException;
 use App\Models\Question;
 use App\Models\Date;
+use App\Models\QuestionProperty;
 
 class QuestionRepository
 {
@@ -27,6 +28,19 @@ class QuestionRepository
         ];
 
         $question = Question::create($newData);
+
+        if(array_key_exists('options', $data))
+        {
+            foreach($data['options'] as $option)
+            {
+                QuestionProperty::create([
+                    'question_id' => $question->id,
+                    'property' => $option['property'],
+                    'value' => $option['value'],
+                    'created_at' => gmdate('Y-m-d H:i:s')
+                ]);
+            }
+        }
 
         for ($i = 0; $i < count($data['dates']); $i++)
         {
@@ -58,6 +72,27 @@ class QuestionRepository
         for ($i = 0; $i < count($data['dates']); $i++)
         {
             Date::create(['date' => $data['dates'][$i], 'question_id' => $question->id]);
+        }
+
+        $options = QuestionProperty::where('question_id', $questionId)->get();
+
+        foreach($options as $option)
+        {
+            $optionToDelete = QuestionProperty::where('id', $option['id'])->firstOrFail();
+            $optionToDelete->delete();
+        }
+
+        if(array_key_exists('options', $data))
+        {
+            foreach($data['options'] as $option)
+            {
+                QuestionProperty::create([
+                    'question_id' => $question->id,
+                    'property' => $option['property'],
+                    'value' => $option['value'],
+                    'created_at' => gmdate('Y-m-d H:i:s')
+                ]);
+            }
         }
 
         $newData = [
