@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Exceptions\Api\ResourceAlreadyExistsException;
 use App\Exceptions\Api\InvalidParametersException;
 use App\Models\User;
+use App\Models\UserRelationship;
 /**
  * Class to handle Users
  * @author Gustavo Delgado <gustavo@onecore.cl>
@@ -52,6 +53,31 @@ class UserRepository
         if (User::where('uuid', '<>', $user->uuid)->where('rut', $data['rut'])->first())
         {
             throw new ResourceAlreadyExistsException("rut " . $data['rut'], ['rut' => 'rut must be unique']);
+        }
+
+        if ($data['godfatherUuid'])
+        {
+            $userRelationship = UserRelationship::where('user_godson_id', $user->id)->first();
+
+            $godfatherUser = User::where('id', $data['godfatherUuid'])->firstOrFail();
+
+            if ($userRelationship)
+            {
+                $userRelationship->update(['user_godfather_id' => $godfatherUser->id, 'update_at' => gmdate('Y-m-d H:i:s')]);
+            }
+            else
+            {
+                UserRelationship::create(['user_godfather_id' => $godfatherUser->id, 'user_godson_id' => $user->id, 'created_at' => gmdate('Y-m-d H:i:s')]);
+            }
+        }
+        else
+        {
+            $userRelationship = UserRelationship::where('user_godson_id', $user->id)->first();
+
+            if ($userRelationship)
+            {
+                $userRelationship->delete();
+            }
         }
 
         $userData = [

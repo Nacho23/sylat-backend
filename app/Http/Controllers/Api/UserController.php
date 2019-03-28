@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Transformers\PaginatorTransformer;
 use App\Models\User;
+use App\Models\UserRelationship;
 use App\Models\Account;
 use App\Models\UserRol;
 use App\Http\Controllers\Api\ApiController;
@@ -47,6 +48,13 @@ class UserController extends ApiController
         $user = UserRepository::add($request->all() + ['account_id' => $account->id]);
 
         UserRol::create(['user_id' => $user->id, 'rol_id' => $request['rol_id'], 'created_at' => gmdate('Y-m-d H:i:s')]);
+
+        if (in_array($request['godfatherUuid'], $request->all()))
+        {
+            $godfatherUser = User::where('uuid', $request['godfatherUuid'])->firstOrFail();
+
+            UserRelationship::create(['user_godfather_id' => $godfatherUser->id, 'user_godson_id' => $user->id, 'created_at' => gmdate('Y-m-d H:i:s')]);
+        }
 
         return $this->respond([
             'data' => [

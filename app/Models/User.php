@@ -80,6 +80,16 @@ class User extends Eloquent implements UuidColumnInterface
     public function unit()
 	{
 		return $this->belongsTo(\App\Models\Unit::class);
+    }
+
+    public function user_relationships_godson()
+	{
+		return $this->hasMany(\App\Models\UserRelationship::class, 'user_godson_id');
+    }
+
+    public function user_relationships_godfather()
+	{
+		return $this->hasMany(\App\Models\UserRelationship::class, 'user_godfather_id');
 	}
 
 	public function rols()
