@@ -12,6 +12,8 @@ Route::middleware(['access_token'])->group(function () {
     Route::delete('/user/{user_uuid}', 'Api\UserController@deleteResource');
     Route::get('/user/{user_uuid}', 'Api\UserController@getResource');
 
+    Route::patch('/user/{user_uuid}/associate', 'Api\UserController@patchUnitResource');
+
     Route::get('/unit', 'Api\UnitController@getCollection');
     Route::post('/unit', 'Api\UnitController@postCollection');
     Route::patch('/unit/{unit_uuid}', 'Api\UnitController@patchResource');
@@ -33,6 +35,10 @@ Route::middleware(['access_token'])->group(function () {
     Route::patch('/question/{question_id}', 'Api\Unit\QuestionController@patchResource');
     Route::delete('/question/{question_id}', 'Api\Unit\QuestionController@deleteResource');
     Route::get('/question/{question_id}', 'Api\Unit\QuestionController@getResource');
+
+    Route::get('/unit/{unit_id}/message', 'Api\Unit\MessageController@getCollection');
+    Route::post('/unit/{unit_id}/message', 'Api\Unit\MessageController@postCollection');
+    Route::get('/message/{message_uuid}', 'Api\Unit\MessageController@getResource');
 });
 
 Route::options('/{any}', function(){ return ''; })->where('any', '.*');

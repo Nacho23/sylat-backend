@@ -15,7 +15,7 @@ class AddUnitIdOnUserTable extends Migration
     {
         Schema::table('user', function(Blueprint $table)
         {
-            $table->integer('unit_id')->unsigned()->index()->after('rut_dv');
+            $table->integer('unit_id')->unsigned()->index()->after('rut_dv')->nullable();
 
             $table->foreign('unit_id')->references('id')->on('unit');
         });

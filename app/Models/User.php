@@ -75,21 +75,21 @@ class User extends Eloquent implements UuidColumnInterface
 	public function account()
 	{
 		return $this->belongsTo(\App\Models\Account::class);
-    }
+	}
 
-    public function unit()
+	public function unit()
 	{
 		return $this->belongsTo(\App\Models\Unit::class);
-    }
+	}
 
-    public function user_relationships_godson()
+	public function messages()
+	{
+		return $this->hasMany(\App\Models\Message::class, 'user_sender_id');
+	}
+
+	public function user_relationships()
 	{
 		return $this->hasMany(\App\Models\UserRelationship::class, 'user_godson_id');
-    }
-
-    public function user_relationships_godfather()
-	{
-		return $this->hasMany(\App\Models\UserRelationship::class, 'user_godfather_id');
 	}
 
 	public function rols()
@@ -97,7 +97,7 @@ class User extends Eloquent implements UuidColumnInterface
 		return $this->belongsToMany(\App\Models\Rol::class, 'user_rol')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
-    }
+	}
 
 	/**
      * Filters users for parameters

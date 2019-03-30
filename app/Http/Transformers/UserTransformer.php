@@ -24,6 +24,10 @@ class UserTransformer extends AbstractTransformer
         {
             $userRelationship = $item->user_relationships_godson;
         }
+        else
+        {
+            $userRelationship = null;
+        }
 
         return [
             'id' => $item->id,
@@ -34,6 +38,7 @@ class UserTransformer extends AbstractTransformer
             'email' => $item->email,
             'rut' => $item->rut,
             'rut_dv' => $item->rut_dv,
+            'unit' => $item->unit,
             'address_street' => $item->address_street,
             'address_number' => $item->address_number,
             'addess_department' => $item->address_department,

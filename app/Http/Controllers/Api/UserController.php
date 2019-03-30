@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Transformers\PaginatorTransformer;
 use App\Models\User;
+use App\Models\Unit;
 use App\Models\UserRelationship;
 use App\Models\Account;
 use App\Models\UserRol;
@@ -49,7 +50,7 @@ class UserController extends ApiController
 
         UserRol::create(['user_id' => $user->id, 'rol_id' => $request['rol_id'], 'created_at' => gmdate('Y-m-d H:i:s')]);
 
-        if (in_array($request['godfatherUuid'], $request->all()))
+        if (in_array($request['godfatherUuid'], $request->all()) && $request['godfatherUuid'] !== NULL)
         {
             $godfatherUser = User::where('uuid', $request['godfatherUuid'])->firstOrFail();
 
@@ -124,6 +125,29 @@ class UserController extends ApiController
     public function getResource(Request $request, $userUuid): Response
     {
         $user = $this->transformer->transform(UserRepository::get($userUuid));
+
+        return $this->respond([
+            'data' => [
+                'user' => $user,
+            ],
+        ]);
+    }
+
+    public function patchUnitResource(Request $request, $userUuid): Response
+    {
+        $user = User::where('uuid', $userUuid)->firstOrFail();
+
+        if ($request['unit_uuid'] !== NULL)
+        {
+            $unit = Unit::where('uuid', $request['unit_uuid'])->firstOrFail();
+            $unit = $unit->id;
+        }
+        else
+        {
+            $unit = null;
+        }
+
+        $user->update(['unit_id' => $unit, 'updated_at' => gmdate('Y-m-d H:i:s')]);
 
         return $this->respond([
             'data' => [
