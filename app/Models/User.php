@@ -87,6 +87,11 @@ class User extends Eloquent implements UuidColumnInterface
 		return $this->hasMany(\App\Models\Message::class, 'user_sender_id');
 	}
 
+	public function posts()
+	{
+		return $this->hasMany(\App\Models\Post::class, 'user_sender_id');
+	}
+
 	public function user_relationships()
 	{
 		return $this->hasMany(\App\Models\UserRelationship::class, 'user_godson_id');

@@ -39,6 +39,8 @@ Route::middleware(['access_token'])->group(function () {
     Route::get('/unit/{unit_id}/message', 'Api\Unit\MessageController@getCollection');
     Route::post('/unit/{unit_id}/message', 'Api\Unit\MessageController@postCollection');
     Route::get('/message/{message_uuid}', 'Api\Unit\MessageController@getResource');
+
+    Route::post('/unit/{unit_id}/import', 'Api\Unit\ImportController@postCollection');
 });
 
 Route::options('/{any}', function(){ return ''; })->where('any', '.*');

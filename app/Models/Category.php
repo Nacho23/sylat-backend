@@ -41,6 +41,11 @@ class Category extends Eloquent
 		return $this->belongsTo(\App\Models\Unit::class);
 	}
 
+	public function posts()
+	{
+		return $this->hasMany(\App\Models\Post::class);
+	}
+
 	/**
      * Filters users for parameters
      *
