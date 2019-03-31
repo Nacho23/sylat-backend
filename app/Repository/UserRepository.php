@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Exceptions\Api\ResourceAlreadyExistsException;
 use App\Exceptions\Api\InvalidParametersException;
+use App\Repository\ValidateRutTrait;
 use App\Models\User;
 use App\Models\UserRelationship;
 /**
@@ -12,6 +13,7 @@ use App\Models\UserRelationship;
  */
 class UserRepository
 {
+    use ValidateRutTrait;
     /**
      * Creates a new user
      *
@@ -20,12 +22,19 @@ class UserRepository
      */
     public static function add(array $data): User
     {
-        // Verify that email already exist
-        $user = User::findByEmail($data['email']);
-
-        if ($user)
+        if (!self::validateRut($data['rut'], $data['rut_dv']))
         {
-            throw new ResourceAlreadyExistsException("email " . $user->email, ['email' => 'email must be unique']);
+            throw new InvalidParametersException(['rut' => 'The rut is not valid']);
+        }
+
+        if (array_key_exists("rut", $data) && User::where('rut', $data['rut'])->first())
+        {
+            throw new ResourceAlreadyExistsException("rut " . $data['rut'], ['rut' => 'Rut must be unique']);
+        }
+
+        if (array_key_exists("email", $data) && User::where('email', $data['email'])->first())
+        {
+            throw new ResourceAlreadyExistsException("email " . $data['email'], ['email' => 'Email must be unique']);
         }
 
         // Password encryption
