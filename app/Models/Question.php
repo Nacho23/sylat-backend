@@ -49,6 +49,16 @@ class Question extends Eloquent
 		return $this->belongsTo(\App\Models\Unit::class);
 	}
 
+	public function answers()
+	{
+		return $this->hasMany(\App\Models\Answer::class);
+	}
+
+	public function dates()
+	{
+		return $this->hasMany(\App\Models\Date::class);
+	}
+
 	public function question_properties()
 	{
 		return $this->hasMany(\App\Models\QuestionProperty::class);

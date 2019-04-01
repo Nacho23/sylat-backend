@@ -8,6 +8,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use App\Models\UuidColumnInterface;
+use App\Models\UuidColumnTrait;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class Post
@@ -27,8 +30,10 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @package App\Models
  */
-class Post extends Eloquent
+class Post extends Eloquent implements UuidColumnInterface
 {
+	use UuidColumnTrait;
+
 	protected $table = 'post';
 
 	protected $casts = [
@@ -41,6 +46,7 @@ class Post extends Eloquent
 		'uuid',
 		'title',
 		'body',
+		'is_important',
 		'category_id',
 		'user_sender_id',
 		'user_receiver_id'
@@ -51,8 +57,43 @@ class Post extends Eloquent
 		return $this->belongsTo(\App\Models\Category::class);
 	}
 
-	public function user()
+	public function user_sender()
 	{
 		return $this->belongsTo(\App\Models\User::class, 'user_sender_id');
+	}
+
+	public function user_receiver()
+	{
+		return $this->belongsTo(\App\Models\User::class, 'user_receiver_id');
+	}
+
+	/**
+     * Filters posts for parameters
+     *
+     * @param  array $data
+     * @return LengthAwarePaginator
+     */
+    public static function filterBy(array $filters = []) : LengthAwarePaginator
+    {
+		$query = self::select('post.*');
+
+		if (array_key_exists("rol_id", $filters))
+		{
+			if($filters['rol_id'] === 3)
+			{
+				$query = $query->where('post.user_receiver_id', $filters['user_id']);
+			}
+			else
+			{
+				$query = $query->where('post.user_sender_id', $filters['user_id']);
+			}
+		}
+
+		if (array_key_exists("category_id", $filters))
+        {
+            $query = $query->where('post.category_id', $filters['category_id']);
+        }
+
+        return $query->paginate(config('app.paginate_size'));
 	}
 }

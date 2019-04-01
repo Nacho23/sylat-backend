@@ -80,6 +80,11 @@ class User extends Eloquent implements UuidColumnInterface
 	public function unit()
 	{
 		return $this->belongsTo(\App\Models\Unit::class);
+    }
+
+    public function answers()
+	{
+		return $this->hasMany(\App\Models\Answer::class);
 	}
 
 	public function messages()

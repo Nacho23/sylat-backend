@@ -21,6 +21,7 @@ class CreatePostTable extends Migration
             $table->integer('category_id')->unsigned()->index();
             $table->integer('user_sender_id')->unsigned()->index();
             $table->integer('user_receiver_id')->unsigned()->index();
+            $table->boolean('is_important')->default(0);
 
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->nullable();
