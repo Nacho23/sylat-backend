@@ -79,7 +79,7 @@ class Post extends Eloquent implements UuidColumnInterface
 
 		if (array_key_exists("rol_id", $filters))
 		{
-			if($filters['rol_id'] === 3)
+			if($filters['rol_id'] == 3)
 			{
 				$query = $query->where('post.user_receiver_id', $filters['user_id']);
 			}

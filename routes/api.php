@@ -48,9 +48,9 @@ Route::middleware(['access_token'])->group(function () {
     Route::get('/post/{post_uuid}', 'Api\User\PostController@getResource');
 
     Route::get('/answer', 'Api\User\AnswerController@getCollection');
-    Route::post('/user/{user_uuid}/answer', 'Api\User\AnswerController@postCollection');
-    Route::patch('/answer/{answer_uuid}', 'Api\User\AnswerController@patchResource');
-    Route::get('/answer/{answer_uuid}', 'Api\User\AnswerController@getResource');
+    Route::post('/user/{user_id}/answer', 'Api\User\AnswerController@postCollection');
+    Route::patch('/answer/{answer_id}', 'Api\User\AnswerController@patchResource');
+    Route::get('/answer/{answer_id}', 'Api\User\AnswerController@getResource');
 });
 
 Route::options('/{any}', function(){ return ''; })->where('any', '.*');
