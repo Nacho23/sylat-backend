@@ -38,6 +38,7 @@ class Post extends Eloquent implements UuidColumnInterface
 
 	protected $casts = [
 		'category_id' => 'int',
+		'unit_id' => 'int',
 		'user_sender_id' => 'int',
 		'user_receiver_id' => 'int'
 	];
@@ -48,6 +49,7 @@ class Post extends Eloquent implements UuidColumnInterface
 		'body',
 		'is_important',
 		'category_id',
+		'unit_id',
 		'user_sender_id',
 		'user_receiver_id'
 	];
@@ -65,6 +67,11 @@ class Post extends Eloquent implements UuidColumnInterface
 	public function user_receiver()
 	{
 		return $this->belongsTo(\App\Models\User::class, 'user_receiver_id');
+	}
+
+	public function unit()
+	{
+		return $this->belongsTo(\App\Models\Unit::class);
 	}
 
 	/**
@@ -92,6 +99,16 @@ class Post extends Eloquent implements UuidColumnInterface
 		if (array_key_exists("category_id", $filters))
         {
             $query = $query->where('post.category_id', $filters['category_id']);
+		}
+
+		if (array_key_exists("unit_id", $filters))
+        {
+            $query = $query->where('post.unit_id', $filters['unit_id']);
+		}
+
+		if (array_key_exists("is_important", $filters))
+        {
+            $query = $query->where('post.is_important', 1);
         }
 
         return $query->paginate(config('app.paginate_size'));

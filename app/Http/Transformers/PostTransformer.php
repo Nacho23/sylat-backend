@@ -17,6 +17,7 @@ class PostTransformer extends AbstractTransformer
             'title' => $item->title,
             'body' => $item->body,
             'category' => $item->category,
+            'unit' => $item->unit,
             'user_sender' => $item->user_sender,
             'user_receiver' => $item->user_receiver,
             'is_important' => $item->is_important,

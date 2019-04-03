@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\User;
+namespace App\Http\Controllers\Api\Unit;
 
 use App\Models\Post;
 use App\Models\User;
@@ -34,18 +34,20 @@ class PostController extends ApiController
      * @param  Request $request Request
      * @return Response
      */
-    public function postCollection(Request $request, string $userUuid): Response
+    public function postCollection(Request $request, string $unitId): Response
     {
         $this->verify($request, [
             'title' => 'string|required',
             'body' => 'string|required',
             'category_id' => 'required',
+            'user_uuid' => 'required',
+            'is_important' => 'required',
             'user_receiver_id' => 'required',
         ]);
 
-        $userSender = User::where('uuid', $userUuid)->firstOrFail();
+        $userSender = User::where('uuid', $request['user_uuid'])->firstOrFail();
 
-        $post = PostRepository::create($request->all(), $userSender->id);
+        $post = PostRepository::create($request->all() + ['user_id' => $userSender->id], $unitId);
 
         return $this->respond([
             'data' => [
@@ -59,9 +61,9 @@ class PostController extends ApiController
      * @param  Request $request Request
      * @return Response
      */
-    public function getCollection(Request $request): Response
+    public function getCollection(Request $request, string $unitId): Response
     {
-        $post = Post::filterBy($request->all());
+        $post = Post::filterBy($request->all() + ['unit_id' => $unitId]);
 
         return $this->respond([
             'data' => PaginatorTransformer::transform($post, 'posts', $this->transformer),

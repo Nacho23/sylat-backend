@@ -6,6 +6,7 @@ use App\Exceptions\Api\InvalidParametersException;
 use App\Exceptions\Api\ResourceAlreadyExistsException;
 use App\Exceptions\Api\NotAllowedInputException;
 use App\Models\Account;
+use App\Models\User;
 use App\Repository\ValidateRutTrait;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -60,15 +61,14 @@ class AccountRepository
             throw new InvalidParametersException(['rut' => 'The rut is not valid']);
         }
 
-
-        if (array_key_exists("rut", $data) && Account::where('rut', $data['rut'])->first())
+        if (array_key_exists("rut", $input) && User::where('rut', $input['rut'])->first())
         {
-            throw new ResourceAlreadyExistsException("rut " . $data['rut'], ['rut' => 'Rut must be unique']);
+            throw new ResourceAlreadyExistsException("rut " . $input['rut'], ['rut' => 'Rut must be unique']);
         }
 
-        if (array_key_exists("email", $data) && Account::where('email', $data['email'])->first())
+        if (array_key_exists("email", $input) && Account::where('email', $input['email'])->first())
         {
-            throw new ResourceAlreadyExistsException("email " . $data['email'], ['email' => 'Email must be unique']);
+            throw new ResourceAlreadyExistsException("email " . $input['email'], ['email' => 'Email must be unique']);
         }
 
         // Verify that you have not associated a rut for the same custoumer

@@ -54,6 +54,11 @@ class Unit extends Eloquent implements UuidColumnInterface
 		return $this->hasMany(\App\Models\News::class);
 	}
 
+	public function posts()
+	{
+		return $this->hasMany(\App\Models\Post::class);
+	}
+
 	public function questions()
 	{
 		return $this->hasMany(\App\Models\Question::class);

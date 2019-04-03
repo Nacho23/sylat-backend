@@ -42,10 +42,10 @@ Route::middleware(['access_token'])->group(function () {
 
     Route::post('/unit/{unit_id}/import', 'Api\Unit\ImportController@postCollection');
 
-    Route::get('/post', 'Api\User\PostController@getCollection');
-    Route::post('/user/{user_uuid}/post', 'Api\User\PostController@postCollection');
-    Route::patch('/post/{post_uuid}', 'Api\User\PostController@patchResource');
-    Route::get('/post/{post_uuid}', 'Api\User\PostController@getResource');
+    Route::get('/unit/{unit_id}/post', 'Api\Unit\PostController@getCollection');
+    Route::post('/unit/{unit_id}/post', 'Api\Unit\PostController@postCollection');
+    Route::patch('/post/{post_uuid}', 'Api\Unit\PostController@patchResource');
+    Route::get('/post/{post_uuid}', 'Api\Unit\PostController@getResource');
 
     Route::get('/answer', 'Api\User\AnswerController@getCollection');
     Route::post('/user/{user_id}/answer', 'Api\User\AnswerController@postCollection');
