@@ -34,7 +34,7 @@ class MessageController extends ApiController
      * @param  Request $request Request
      * @return Response
      */
-    public function postCollection(Request $request, string $unitId): Response
+    public function postCollection(Request $request, string $unitUuid): Response
     {
         $this->verify($request, [
             'title' => 'string|required',
@@ -42,7 +42,7 @@ class MessageController extends ApiController
             'user_sender_id' => 'string|required',
         ]);
 
-        $unit = Unit::where('uuid', $unitId)->firstOrFail();
+        $unit = Unit::where('uuid', $unitUuid)->firstOrFail();
 
         $message = MessageRepository::create($request->all(), $unit->id);
 

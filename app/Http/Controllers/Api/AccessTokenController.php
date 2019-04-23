@@ -39,6 +39,7 @@ class AccessTokenController extends ApiController
                 'uuid' => $account->uuid,
                 'rol' => $userRol->rol->name,
                 'unit_id' => $user->unit_id,
+                'user_id' => $user->id,
             ],
         ]);
     }

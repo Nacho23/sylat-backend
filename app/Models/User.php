@@ -171,6 +171,13 @@ class User extends Eloquent implements UuidColumnInterface
             $query = $query->where('user.unit_id', $filters['unit_id']);
         }
 
+        if (array_key_exists("godfather_id", $filters))
+        {
+            $query = $query->join('user_relationship', 'user.id', '=', 'user_relationship.user_godson_id')
+            ->select('user.*')
+            ->where('user_relationship.user_godfather_id', $filters['godfather_id']);
+        }
+
         return $query->paginate(config('app.paginate_size'));
 	}
 
