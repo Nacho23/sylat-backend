@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Unit;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Unit;
 use App\Repository\PostRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -34,20 +35,22 @@ class PostController extends ApiController
      * @param  Request $request Request
      * @return Response
      */
-    public function postCollection(Request $request, string $unitId): Response
+    public function postCollection(Request $request, string $unitUuid): Response
     {
         $this->verify($request, [
             'title' => 'string|required',
             'body' => 'string|required',
             'category_id' => 'required',
-            'user_uuid' => 'required',
+            'user_sender_id' => 'required',
             'is_important' => 'required',
             'user_receiver_id' => 'required',
         ]);
 
-        $userSender = User::where('uuid', $request['user_uuid'])->firstOrFail();
+        $unit = Unit::where('uuid', $unitUuid)->firstOrFail();
 
-        $post = PostRepository::create($request->all() + ['user_id' => $userSender->id], $unitId);
+        $userSender = User::where('id', $request['user_sender_id'])->firstOrFail();
+
+        $post = PostRepository::create($request->all(), $unit->id);
 
         return $this->respond([
             'data' => [

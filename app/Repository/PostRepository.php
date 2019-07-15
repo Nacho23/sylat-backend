@@ -28,7 +28,7 @@ class PostRepository
             'category_id' => $data['category_id'],
             'unit_id' => $unitId,
             'user_receiver_id' => $data['user_receiver_id'],
-            'user_sender_id' => $data['user_id'],
+            'user_sender_id' => $data['user_sender_id'],
             'is_important' => $data['is_important'],
             'created_at' => gmdate('Y-m-d H:i:s'),
         ];

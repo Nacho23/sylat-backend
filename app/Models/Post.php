@@ -82,7 +82,7 @@ class Post extends Eloquent implements UuidColumnInterface
      */
     public static function filterBy(array $filters = []) : LengthAwarePaginator
     {
-		$query = self::select('post.*');
+		$query = self::select('post.*')->orderBy('created_at', 'desc');
 
 		if (array_key_exists("rol_id", $filters))
 		{
