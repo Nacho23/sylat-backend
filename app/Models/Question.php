@@ -72,7 +72,7 @@ class Question extends Eloquent
      */
     public static function filterBy(array $filters = []) : LengthAwarePaginator
     {
-		$query = self::select('question.*');
+		$query = self::select('question.*')->orderBy('created_at', 'desc');
 
 		if (array_key_exists("unit_id", $filters))
         {

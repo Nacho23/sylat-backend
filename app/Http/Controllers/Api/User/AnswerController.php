@@ -36,7 +36,7 @@ class AnswerController extends ApiController
      * @param  Request $request Request
      * @return Response
      */
-    public function postCollection(Request $request, string $userUuid): Response
+    public function postCollection(Request $request, string $userId): Response
     {
         $this->verify($request, [
             'type' => ['required', 'string', Rule::in(TypeQuestion::ALLOWED)],
@@ -44,7 +44,7 @@ class AnswerController extends ApiController
             'question_id' => 'required'
         ]);
 
-        $user = User::where('uuid', $userUuid)->firstOrFail();
+        $user = User::where('id', $userId)->firstOrFail();
 
         $question = Question::where('id', $request['question_id'])->firstOrFail();
 
