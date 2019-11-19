@@ -63,7 +63,7 @@ class Message extends Eloquent
      */
     public static function filterBy(array $filters = []) : LengthAwarePaginator
     {
-        $query = self::select('message.*');
+        $query = self::select('message.*')->orderBy('created_at', 'desc');
 
         return $query->paginate(config('app.paginate_size'));
 	}

@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use Illuminate\Support\Facades\Storage;
 use App\Exceptions\Api\NotAllowedExtensionException;
-use App\Repository\AttachableInterface;
 use App\Models\Attachment;
 
 class AttachmentRepository

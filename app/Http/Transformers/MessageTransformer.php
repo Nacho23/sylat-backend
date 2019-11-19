@@ -14,7 +14,8 @@ class MessageTransformer extends AbstractTransformer
         return [
             'id' => $item->id,
             'uuid' => $item->uuid,
-            'unit_id' => $item->unit_id,
+            'unit' => $item->unit,
+            'user_sender' => $item->user,
             'title' => $item->title,
             'body' => $item->body,
             'created_at' => $item->created_at->format('Y-m-d H:i:s'),

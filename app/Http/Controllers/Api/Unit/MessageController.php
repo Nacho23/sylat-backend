@@ -6,7 +6,6 @@ use App\Models\Message;
 use App\Models\Unit;
 use App\Repository\MessageRepository;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Transformers\MessageTransformer;
 use App\Http\Transformers\PaginatorTransformer;
 use Symfony\Component\HttpFoundation\Response;

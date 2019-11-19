@@ -2,12 +2,10 @@
 
 namespace App\Repository;
 
-use App\Exceptions\Api\ResourceAlreadyExistsException;
-use App\Exceptions\Api\InvalidParametersException;
-use App\Exceptions\Api\ResourceAlreadyHasContextException;
 use App\Models\Question;
 use App\Models\Date;
 use App\Models\QuestionProperty;
+use Illuminate\Support\Facades\DB;
 
 class QuestionRepository
 {
@@ -115,18 +113,26 @@ class QuestionRepository
      */
     public static function delete(string $questionId)
     {
-        $question = Question::where('id', $questionId)->firstOrFail();
-
-        $questionProperties = $question->question_properties;
-
-        if(count($questionProperties) !== 0)
+        try
         {
-            throw new ResourceAlreadyHasContextException($question->description, "Propiedades asociadas");
+            DB::beginTransaction();
+
+            $question = Question::where('id', $questionId)->firstOrFail();
+
+            $question->question_properties()->delete();
+
+            $question->dates()->delete();
+
+            $question->delete();
+
+            DB::commit();
         }
+        catch (Exception $e)
+        {
+            DB::rollBack();
 
-        //TODO : ver si la pregunta tien respuestas asociadas, si es asi, lanzar exception
-
-        $question->delete();
+            throw $e;
+        }
     }
 
     /**

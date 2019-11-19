@@ -6,7 +6,6 @@ use App\Http\Transformers\PaginatorTransformer;
 use App\Models\User;
 use App\Models\Unit;
 use App\Models\UserRelationship;
-use App\Models\Account;
 use App\Models\UserRol;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\InputRules\UserRules;

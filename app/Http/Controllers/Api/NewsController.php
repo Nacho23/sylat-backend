@@ -6,6 +6,7 @@ use App\Models\News;
 use App\Repository\NewsRepository;
 use Illuminate\Http\Request;
 use App\Http\Transformers\NewsTransformer;
+use App\Http\Transformers\PaginatorTransformer;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -42,8 +43,8 @@ class NewsController extends ApiController
 
         return $this->respond([
             'data' => [
-                'news' => $news,
-            ],
+                'news' => $this->transformer->transform($news),
+            ]
         ]);
     }
 
@@ -57,7 +58,7 @@ class NewsController extends ApiController
         $news = News::filterBy($request->all());
 
         return $this->respond([
-            'data' => $news,
+            'data' => PaginatorTransformer::transform($news, 'news', $this->transformer),
         ]);
     }
 
@@ -84,7 +85,7 @@ class NewsController extends ApiController
 
         return $this->respond([
             'data' => [
-                'new' => $news,
+                'new' => $this->transformer->transform($news),
             ],
         ]);
     }
@@ -116,7 +117,7 @@ class NewsController extends ApiController
 
         return $this->respond([
             'data' => [
-                'news' => $news,
+                'news' => $this->transformer->transform($news),
             ],
         ]);
     }

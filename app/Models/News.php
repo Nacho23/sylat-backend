@@ -10,10 +10,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use App\Models\UuidColumnInterface;
 use App\Models\UuidColumnTrait;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class News
- * 
+ *
  * @property int $id
  * @property string $uuid
  * @property string $description
@@ -22,7 +23,7 @@ use App\Models\UuidColumnTrait;
  * @property int $date_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * 
+ *
  * @property \App\Models\Date $date
  * @property \App\Models\Unit $unit
  *
@@ -61,7 +62,7 @@ class News extends Eloquent implements UuidColumnInterface
      *
      * @param  array $data
      */
-    public static function filterBy(array $filters = [])
+    public static function filterBy(array $filters = []) : LengthAwarePaginator
     {
         $query = self::select('news.*');
 
@@ -70,6 +71,6 @@ class News extends Eloquent implements UuidColumnInterface
             $query = $query->where('news.unit_id', $filters['unit_id']);
         }
 
-        return $query->get();
+        return $query->paginate(config('app.paginate_size'));
 	}
 }

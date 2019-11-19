@@ -12,7 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class Question
- * 
+ *
  * @property int $id
  * @property string $description
  * @property string $type
@@ -21,7 +21,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
- * 
+ *
  * @property \App\Models\Unit $unit
  * @property \Illuminate\Database\Eloquent\Collection $question_properties
  *
@@ -29,7 +29,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class Question extends Eloquent
 {
-	use \Illuminate\Database\Eloquent\SoftDeletes;
 	protected $table = 'question';
 
 	protected $casts = [
@@ -77,6 +76,11 @@ class Question extends Eloquent
 		if (array_key_exists("unit_id", $filters))
         {
             $query = $query->where('question.unit_id', $filters['unit_id']);
+        }
+
+        if (array_key_exists("date", $filters))
+        {
+            $query = $query->join('date', 'question.id', 'date.question_id')->whereDate('date.date', $filters['date']);
         }
 
         return $query->paginate(config('app.paginate_size'));
