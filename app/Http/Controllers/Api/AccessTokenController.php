@@ -36,7 +36,8 @@ class AccessTokenController extends ApiController
         return $this->respond([
             'access_token' => $account->refreshAccessToken()->token,
             'user' => [
-                'uuid' => $account->uuid,
+                'account_uuid' => $account->uuid,
+                'user_uuid' => $user->uuid,
                 'rol' => $userRol->rol->name,
                 'unit_id' => $user->unit_id,
                 'user_id' => $user->id,
