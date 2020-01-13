@@ -81,6 +81,11 @@ class Answer extends Eloquent implements UuidColumnInterface
             $query = $query->where('answer.date', $filters['date']);
         }
 
+        if (array_key_exists('start_date', $filters) && array_key_exists('end_date', $filters))
+		{
+			$query = $query->whereBetween('answer.date', [$filters['start_date'], $filters['end_date']]);
+		}
+
         return $query->paginate(config('app.paginate_size'));
 	}
 }

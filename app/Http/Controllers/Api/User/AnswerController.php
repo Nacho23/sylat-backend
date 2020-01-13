@@ -65,6 +65,11 @@ class AnswerController extends ApiController
      */
     public function getCollection(Request $request): Response
     {
+        $this->verify($request, [
+            'start_date' => 'date_format:Y-m-d|required_with:end_date|after:1989-12-31',
+            'end_date' => 'date_format:Y-m-d|required_with:start_date|after_or_equal:start_date',
+        ]);
+
         $answer = Answer::filterBy($request->all());
 
         return $this->respond([
