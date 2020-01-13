@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use App\Models\UuidColumnInterface;
 use App\Models\UuidColumnTrait;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Answer
- * 
+ *
  * @property int $id
  * @property string $uuid
  * @property string $type
@@ -22,7 +23,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * 
+ *
  * @property \App\Models\User $user
  *
  * @package App\Models
@@ -73,7 +74,12 @@ class Answer extends Eloquent implements UuidColumnInterface
 		if (array_key_exists("question_id", $filters))
         {
             $query = $query->where('answer.question_id', $filters['question_id']);
-		}
+        }
+
+        if (array_key_exists("date", $filters))
+        {
+            $query = $query->where('answer.date', $filters['date']);
+        }
 
         return $query->paginate(config('app.paginate_size'));
 	}

@@ -41,7 +41,8 @@ class AnswerController extends ApiController
         $this->verify($request, [
             'type' => ['required', 'string', Rule::in(TypeQuestion::ALLOWED)],
             'answer' => 'required',
-            'question_id' => 'required'
+            'question_id' => 'required',
+            'date' => 'required',
         ]);
 
         $user = User::where('id', $userId)->firstOrFail();

@@ -24,6 +24,7 @@ class AnswerRepository
             'type' => $data['type'],
             'answer' => $data['answer'],
             'user_id' => $userId,
+            'date' => $data['date'],
             'question_id' => $data['question_id'],
             'created_at' => gmdate('Y-m-d H:i:s'),
         ];
