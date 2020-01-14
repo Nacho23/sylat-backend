@@ -2,12 +2,7 @@
 
 namespace App\Repository;
 
-use App\Exceptions\Api\ResourceAlreadyExistsException;
-use App\Exceptions\Api\InvalidParametersException;
-use App\Exceptions\Api\ResourceAlreadyHasContextException;
 use App\Models\Answer;
-use App\Models\Date;
-use App\Models\Category;
 
 class AnswerRepository
 {

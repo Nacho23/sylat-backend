@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use App\Models\UuidColumnInterface;
 use App\Models\UuidColumnTrait;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class Answer
@@ -23,7 +22,9 @@ use Illuminate\Support\Facades\DB;
  * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $date
  *
+ * @property \App\Models\Question $question
  * @property \App\Models\User $user
  *
  * @package App\Models
@@ -35,7 +36,7 @@ class Answer extends Eloquent implements UuidColumnInterface
 	protected $table = 'answer';
 
 	protected $casts = [
-		'user_id' => 'int'
+        'user_id' => 'int'
 	];
 
 	protected $fillable = [
@@ -43,7 +44,8 @@ class Answer extends Eloquent implements UuidColumnInterface
 		'type',
 		'answer',
 		'user_id',
-		'question_id'
+		'question_id',
+		'date'
 	];
 
 	public function question()
