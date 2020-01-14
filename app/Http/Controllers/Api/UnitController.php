@@ -38,7 +38,7 @@ class UnitController extends ApiController
             'code' => 'string|required',
         ]);
 
-        $unit = Unit::create($request->all() + ['created_at' => gmdate('Y-m-d H:i:s')]);
+        $unit = UnitRepository::create($request->all());
 
         return $this->respond([
             'data' => [

@@ -19,7 +19,7 @@ class ResourceAlreadyExistsException extends ApiException implements ErrorsDetai
      */
     public function __construct(string $resource, array $uniqueFields = [])
     {
-        parent::__construct('Resource already exists for ' . $resource, ApiException::RESOURCE_ALREADY_EXISTS);
+        parent::__construct('El registro ya existe para ' . $resource, ApiException::RESOURCE_ALREADY_EXISTS);
 
         $this->errors = $uniqueFields;
     }

@@ -26,7 +26,7 @@ class InvalidParametersException extends ApiException implements ErrorsDetailsIn
     {
         $this->errors = $errors;
 
-        parent::__construct('Invalid parameter(s)', ApiException::INVALID_PARAMETER);
+        parent::__construct('Existen parámetros inválidos', ApiException::INVALID_PARAMETER);
     }
 
     /**

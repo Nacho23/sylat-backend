@@ -9,6 +9,31 @@ use App\Models\Unit;
 class UnitRepository
 {
     /**
+     * Creates an unit
+     *
+     * @param  string  $unitUuid   Unit uuid
+     * @param  array   $data     Unit data
+     * @return Unit
+     */
+    public static function create(array $data): Unit
+    {
+        if (Unit::where('code', $data['code'])->first())
+        {
+            throw new ResourceAlreadyExistsException("code " . $data['code'], ['code' => 'code must be unique']);
+        }
+
+        $unitData = [
+            'name' => $data['name'],
+            'code' => $data['code'],
+            'created_at' => gmdate('Y-m-d H:i:s'),
+        ];
+
+        $unit = Unit::create($unitData);
+
+        return $unit;
+    }
+
+    /**
      * Updates an unit
      *
      * @param  string  $unitUuid   Unit uuid

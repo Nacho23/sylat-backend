@@ -54,6 +54,11 @@ class UserRepository
     {
         $user = User::where('uuid', $userUuid)->first();
 
+        if (!self::validateRut($data['rut'], $data['rut_dv']))
+        {
+            throw new InvalidParametersException(['rut' => 'The rut is not valid']);
+        }
+
         if (User::where('uuid', '<>', $user->uuid)->where('email', $data['email'])->first())
         {
             throw new ResourceAlreadyExistsException("email " . $data['email'], ['email' => 'email must be unique']);
