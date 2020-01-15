@@ -31,7 +31,12 @@ class AccessTokenController extends ApiController
 
         $user = User::where('email', $request->get('email'))->firstOrFail();
 
-        $userRol = UserRol::where('user_id', $user->id)->firstOrFail();
+        $userRol = UserRol::where('user_id', $user->id)->first();
+
+        if (!$userRol)
+        {
+            throw new AuthorizationException;
+        }
 
         return $this->respond([
             'access_token' => $account->refreshAccessToken()->token,
