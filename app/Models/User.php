@@ -22,8 +22,10 @@ use App\Models\Unit;
  * @property int $account_id
  * @property string $first_name
  * @property string $last_name
+ * @property string $email
  * @property int $rut
  * @property string $rut_dv
+ * @property int $unit_id
  * @property string $address_street
  * @property string $address_number
  * @property string $address_department
@@ -36,6 +38,11 @@ use App\Models\Unit;
  * @property string $deleted_at
  *
  * @property \App\Models\Account $account
+ * @property \App\Models\Unit $unit
+ * @property \Illuminate\Database\Eloquent\Collection $answers
+ * @property \Illuminate\Database\Eloquent\Collection $messages
+ * @property \Illuminate\Database\Eloquent\Collection $posts
+ * @property \Illuminate\Database\Eloquent\Collection $user_relationships
  * @property \Illuminate\Database\Eloquent\Collection $rols
  *
  * @package App\Models
@@ -51,6 +58,7 @@ class User extends Eloquent implements UuidColumnInterface
 	protected $casts = [
 		'account_id' => 'int',
 		'rut' => 'int',
+		'unit_id' => 'int',
 		'is_active' => 'bool'
 	];
 
@@ -58,11 +66,11 @@ class User extends Eloquent implements UuidColumnInterface
 		'uuid',
 		'account_id',
 		'first_name',
-        'last_name',
-        'email',
+		'last_name',
+		'email',
 		'rut',
-        'rut_dv',
-        'unit_id',
+		'rut_dv',
+		'unit_id',
 		'address_street',
 		'address_number',
 		'address_department',
