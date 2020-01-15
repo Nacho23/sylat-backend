@@ -16,7 +16,7 @@ use App\Models\Unit;
 
 /**
  * Class User
- * 
+ *
  * @property int $id
  * @property string $uuid
  * @property int $account_id
@@ -34,7 +34,7 @@ use App\Models\Unit;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
- * 
+ *
  * @property \App\Models\Account $account
  * @property \Illuminate\Database\Eloquent\Collection $rols
  *
@@ -163,6 +163,12 @@ class User extends Eloquent implements UuidColumnInterface
 				$query = $query->join('user_rol', 'user.id', '=', 'user_rol.user_id')
 				->select('user.*')
 				->where('user_rol.rol_id', '3');
+            }
+            else if ($filters['type'] === 'admin')
+			{
+				$query = $query->join('user_rol', 'user.id', '=', 'user_rol.user_id')
+				->select('user.*')
+				->where('user_rol.rol_id', '1');
 			}
         }
 
