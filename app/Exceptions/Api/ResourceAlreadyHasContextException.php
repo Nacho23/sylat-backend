@@ -15,7 +15,7 @@ class ResourceAlreadyHasContextException extends ApiException
      */
     public function __construct(string $resource, string $context)
     {
-        parent::__construct('Resource already have the context ' . $context .' for ' . $resource, ApiException::RESOURCE_HAS_CONTEXT);
+        parent::__construct('El registro tiene dependencia(s) asociada(s)');
     }
 
     /**

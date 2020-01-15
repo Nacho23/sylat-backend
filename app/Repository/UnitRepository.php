@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Exceptions\Api\ResourceAlreadyExistsException;
 use App\Exceptions\Api\InvalidParametersException;
+use App\Exceptions\Api\ResourceAlreadyHasContextException;
 use App\Models\Unit;
 
 class UnitRepository
@@ -69,8 +70,37 @@ class UnitRepository
     public static function delete(string $unitUuid)
     {
         $unit = Unit::where('uuid', $unitUuid)->where('deleted_at', null)->firstOrFail();
+
+        self::hasContext($unit);
+
         $unit->deleted_at = gmdate('Y-m-d H:i:s');
         $unit->save();
+    }
+
+    public static function hasContext($unit)
+    {
+        if (count($unit->categories) > 0) {
+            throw new ResourceAlreadyHasContextException($unit->id, 'category');
+        }
+        else if (count($unit->messages) > 0) {
+            throw new ResourceAlreadyHasContextException($unit->id, 'message');
+        }
+        else if (count($unit->news) > 0) {
+            throw new ResourceAlreadyHasContextException($unit->id, 'new');
+        }
+        else if (count($unit->posts) > 0) {
+            throw new ResourceAlreadyHasContextException($unit->id, 'post');
+        }
+        else if (count($unit->questions) > 0) {
+            throw new ResourceAlreadyHasContextException($unit->id, 'question');
+        }
+        else if (count($unit->users) > 0) {
+            throw new ResourceAlreadyHasContextException($unit->id, 'user');
+        } else {
+            return true;
+        }
+
+        return true;
     }
 
     /**

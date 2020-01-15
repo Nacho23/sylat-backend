@@ -14,14 +14,14 @@ use App\Models\UuidColumnTrait;
 
 /**
  * Class Unit
- * 
+ *
  * @property int $id
  * @property string $uuid
  * @property string $name
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
- * 
+ *
  * @property \Illuminate\Database\Eloquent\Collection $users
  *
  * @package App\Models
